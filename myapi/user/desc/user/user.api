@@ -1,0 +1,70 @@
+syntax = "v1"
+
+info(
+	title: "用户中心服务"
+	desc: "用户中心服务"
+	author: "xxxxxxx"
+	email: "xxxxxxxx@163.com"
+	version: "v1"
+)
+
+type User {
+	Id     int64  `json:"id"`
+	Mobile string `json:"mobile"`
+	Name   string `json:"Name"`
+}
+
+type (
+	RegisterReq {
+		Mobile   string `json:"mobile"`
+		Password string `json:"password"`
+	}
+	RegisterResp {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
+	}
+)
+
+type (
+	LoginReq {
+		Mobile   string `json:"mobile"`
+		Password string `json:"password"`
+	}
+	LoginResp {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
+	}
+)
+
+type (
+	WXMiniAuthReq {
+		Code          string `json:"code"`
+		IV            string `json:"iv"`
+		EncryptedData string `json:"encryptedData"`
+	}
+	WXMiniAuthResp {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
+	}
+)
+
+type (
+	UserInfoReq {
+	}
+	UserInfoResp {
+		UserInfo User `json:"userInfo"`
+	}
+)
+
+type (
+	UserEditReq {
+		Name string `json:"name"`
+	}
+	UserEditResp {
+		UserInfo User `json:"userInfo"`
+	}
+)
+

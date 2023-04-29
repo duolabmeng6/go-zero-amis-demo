@@ -1,0 +1,43 @@
+syntax = "v1"
+info(
+	title: "用户中心服务"
+	desc: "用户中心服务"
+	author: "xxxxxxx"
+	email: "xxxxxxxx@163.com"
+	version: "v1"
+)
+import (
+	"user/user.api"
+)
+//============================> user v1 <============================
+//no need login
+@server(
+	prefix: v1
+	group: user
+)
+service user {
+	@doc "注册用户"
+	@handler register
+	post /user/register (RegisterReq) returns (RegisterResp)
+	
+	@doc "登录"
+	@handler login
+	post /user/login (LoginReq) returns (LoginResp)
+}
+
+//need login
+@server(
+	prefix: v1
+	group: user
+	jwt: Auth
+)
+service user {
+	@doc "获取用户详细信息"
+	@handler detail
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
+	
+	@doc "编辑用户信息"
+	@handler edit
+	post /user/edit (UserEditReq) returns (UserEditReq)
+	
+}
