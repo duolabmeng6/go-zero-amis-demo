@@ -38,6 +38,6 @@ service user {
 	
 	@doc "编辑用户信息"
 	@handler edit
-	post /user/edit (UserEditReq) returns (UserEditReq)
+	post /user/edit (UserEditReq) returns (UserEditResp)
 	
 }

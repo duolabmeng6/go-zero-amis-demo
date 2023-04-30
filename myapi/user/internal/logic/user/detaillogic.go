@@ -27,11 +27,9 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 
 func (l *DetailLogic) Detail(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
 	//获取jwt的用户id
-	jwtUserId := logic.GetUidFromCtx(l.ctx)
-	logx.Infof("??????", jwtUserId)
-
+	userId := logic.GetUidFromCtx(l.ctx)
 	// 获取用户信息
-	userInfoResp, err := l.svcCtx.UserModel.FindOne(l.ctx, jwtUserId)
+	userInfoResp, err := l.svcCtx.UserModel.FindOne(l.ctx, userId)
 	if err != nil {
 		return nil, errors.New("未查询到")
 	}

@@ -1,0 +1,31 @@
+syntax = "v1"
+
+type ArticleItems {
+	Id        int64  `json:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type (
+	ArticleIndexRequest {
+		Page     int64  `form:"page"`
+		PerPage  int64  `form:"perPage"`
+		Keywords string `form:"keywords,optional"`
+	}
+
+	ArticleIndexResponse {
+		Items []ArticleItems `json:"items"`
+		Total int64          `json:"total"`
+	}
+)
+
+@server(
+	prefix: api
+	middleware: CORSMiddleware
+)
+service atricle-api {
+	@handler ArticleIndex
+	get /articles (ArticleIndexRequest) returns (ArticleIndexResponse)
+}

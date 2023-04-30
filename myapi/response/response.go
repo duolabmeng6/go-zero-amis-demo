@@ -14,6 +14,7 @@ type Body struct {
 }
 
 func Response(w http.ResponseWriter, resp interface{}, err interface{}) {
+
 	var body Body
 	switch e := err.(type) {
 	case *errorx.CodeError:

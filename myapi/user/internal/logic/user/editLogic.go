@@ -2,6 +2,9 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"myapi/common/errorx"
+	"myapi/user/internal/logic"
 
 	"myapi/user/internal/svc"
 	"myapi/user/internal/types"
@@ -23,8 +26,25 @@ func NewEditLogic(ctx context.Context, svcCtx *svc.ServiceContext) *EditLogic {
 	}
 }
 
-func (l *EditLogic) Edit(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
-	// todo: add your logic here and delete this line
+func (l *EditLogic) Edit(req *types.UserEditReq) (resp *types.UserEditResp, err error) {
+	// 获取用户id
+	userId := logic.GetUidFromCtx(l.ctx)
+	// 获取用户信息
+	userInfoResp, err := l.svcCtx.UserModel.FindOne(l.ctx, userId)
+	if err != nil {
+		return nil, errorx.NewCodeError(1001, "未查询到")
+	}
+	// 修改用户信息
+	userInfoResp.Name = req.Name
 
-	return
+	// 写入数据库
+	err = l.svcCtx.UserModel.Update(l.ctx, userInfoResp)
+	if err != nil {
+		return nil, err
+	}
+
+	userInfo := types.User{}
+	_ = copier.Copy(&userInfo, userInfoResp)
+	return &types.UserEditResp{UserInfo: userInfo}, nil
+
 }

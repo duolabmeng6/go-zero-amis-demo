@@ -18,6 +18,11 @@ import (
 
 var configFile = flag.String("f", "etc/user.yaml", "the config file")
 
+type CodeErrorResponse struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
 func main() {
 	flag.Parse()
 
@@ -31,11 +36,15 @@ func main() {
 	handler.RegisterHandlers(server, ctx)
 	// 自定义错误
 	httpx.SetErrorHandlerCtx(func(ctx context.Context, err error) (int, interface{}) {
+
 		switch e := err.(type) {
 		case *errorx.CodeError:
 			return http.StatusOK, e.Data()
 		default:
-			return http.StatusInternalServerError, nil
+			return http.StatusInternalServerError, &CodeErrorResponse{
+				Code: 500,
+				Msg:  e.Error(),
+			}
 		}
 	})
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)

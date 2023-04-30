@@ -1,25 +1,25 @@
-package user
+package handler
 
 import (
 	"myapi/response"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"myapi/user/internal/logic/user"
-	"myapi/user/internal/svc"
-	"myapi/user/internal/types"
+	"myapi/article/internal/logic"
+	"myapi/article/internal/svc"
+	"myapi/article/internal/types"
 )
 
-func WxMiniAuthHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func ArticleIndexHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.WXMiniAuthReq
+		var req types.ArticleIndexRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := user.NewWxMiniAuthLogic(r.Context(), svcCtx)
-		resp, err := l.WxMiniAuth(&req)
+		l := logic.NewArticleIndexLogic(r.Context(), svcCtx)
+		resp, err := l.ArticleIndex(&req)
 
 		response.Response(w, resp, err)
 		//if err != nil {
