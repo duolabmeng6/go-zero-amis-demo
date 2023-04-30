@@ -19,3 +19,22 @@ type ArticleIndexResponse struct {
 	Items []ArticleItems `json:"items"`
 	Total int64          `json:"total"`
 }
+
+type ArticleDestroyRequest struct {
+	Id int64 `path:"id"`
+}
+
+type ArticleDestroyResponse struct {
+	Status int64  `json:"status"`
+	Msg    string `json:"msg"`
+}
+
+type ArticleEditRequest struct {
+	Id int64 `path:"id"`
+}
+
+type ArticleEditResponse struct {
+	Status int64        `json:"status"`
+	Msg    string       `json:"msg"`
+	Data   ArticleItems `json:"data"`
+}

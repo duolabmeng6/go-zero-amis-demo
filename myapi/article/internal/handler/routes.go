@@ -19,6 +19,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/articles",
 					Handler: ArticleIndexHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/articles/:id",
+					Handler: ArticleDestroyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/articles/:id/edit",
+					Handler: ArticleEditHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/api"),

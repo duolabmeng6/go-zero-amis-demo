@@ -21,6 +21,29 @@ type (
 	}
 )
 
+type (
+	ArticleDestroyRequest {
+		Id int64 `path:"id"`
+	}
+	//{"status":0,"msg":"\u5220\u9664\u6210\u529f"}
+	ArticleDestroyResponse {
+		Status int64  `json:"status"`
+		Msg    string `json:"msg"`
+	}
+)
+
+type (
+	ArticleEditRequest {
+		Id int64 `path:"id"`
+	}
+	//{"status":0,"msg":"\u5220\u9664\u6210\u529f"}
+	ArticleEditResponse {
+		Status int64        `json:"status"`
+		Msg    string       `json:"msg"`
+		Data   ArticleItems `json:"data"`
+	}
+)
+
 @server(
 	prefix: api
 	middleware: CORSMiddleware
@@ -28,4 +51,11 @@ type (
 service atricle-api {
 	@handler ArticleIndex
 	get /articles (ArticleIndexRequest) returns (ArticleIndexResponse)
+	
+	@handler ArticleDestroy
+	get /articles/:id (ArticleDestroyRequest) returns (ArticleDestroyResponse)
+	
+	@handler ArticleEdit
+	get /articles/:id/edit (ArticleEditRequest) returns (ArticleEditResponse)
+	
 }
