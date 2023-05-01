@@ -11,26 +11,43 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CORSMiddleware},
-			[]rest.Route{
-				{
-					Method:  http.MethodGet,
-					Path:    "/articles",
-					Handler: ArticleIndexHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodGet,
-					Path:    "/articles/:id",
-					Handler: ArticleDestroyHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodGet,
-					Path:    "/articles/:id/edit",
-					Handler: ArticleEditHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/articles",
+				Handler: ArticleIndexHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/articles/:id",
+				Handler: ArticleDestroyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/articles/:id/edit",
+				Handler: ArticleEditHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/articles/:id",
+				Handler: ArticleUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodOptions,
+				Path:    "/articles",
+				Handler: ArticleOptionsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/articles",
+				Handler: ArticleStoreHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/articles/bulkDelete/:ids",
+				Handler: ArticleBulkDeleteHandler(serverCtx),
+			},
+		},
 		rest.WithPrefix("/api"),
 	)
 }

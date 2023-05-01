@@ -14,6 +14,7 @@ type (
 	ArticlesModel interface {
 		articlesModel
 		Index(ctx context.Context, keywords string, perPage int64, page int64) (*[]Articles, error)
+		Count(ctx context.Context, keywords string) (int64, error)
 	}
 
 	customArticlesModel struct {
@@ -49,4 +50,22 @@ func (m *defaultArticlesModel) Index(ctx context.Context, keywords string, perPa
 	}
 	return &resp, nil
 
+}
+
+// 查询总数量
+func (m *defaultArticlesModel) Count(ctx context.Context, keywords string) (int64, error) {
+	query := ""
+	if keywords != "" {
+		keywords = "%" + keywords + "%"
+		query = "select count(*) from " + m.table + " where title like ?"
+	} else {
+		query = "select count(*) from " + m.table
+	}
+	var total int64
+	err := m.conn.QueryRowCtx(ctx, &total, query)
+	if err != nil {
+		logx.Error(err)
+		return 0, err
+	}
+	return total, nil
 }

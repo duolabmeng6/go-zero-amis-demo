@@ -38,3 +38,39 @@ type ArticleEditResponse struct {
 	Msg    string       `json:"msg"`
 	Data   ArticleItems `json:"data"`
 }
+
+type ArticleUpdateRequest struct {
+	Id        int64  `path:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type ArticleUpdateResponse struct {
+	Status int64        `json:"status"`
+	Msg    string       `json:"msg"`
+	Data   ArticleItems `json:"data"`
+}
+
+type ArticleStoreRequest struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type ArticleStoreResponse struct {
+	Id        int64  `json:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type ArticleBulkDeleteRequest struct {
+	Ids string `path:"ids"`
+}
+
+type ArticleBulkDeleteResponse struct {
+	Status int64  `json:"status"`
+	Msg    string `json:"msg"`
+}

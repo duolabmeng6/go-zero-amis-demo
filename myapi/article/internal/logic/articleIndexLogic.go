@@ -27,6 +27,7 @@ func (l *ArticleIndexLogic) ArticleIndex(req *types.ArticleIndexRequest) (resp *
 	if err != nil {
 		return nil, err
 	}
+
 	// 构造数据返回
 	var articles []types.ArticleItems
 	for _, item := range *articleItems {
@@ -34,13 +35,15 @@ func (l *ArticleIndexLogic) ArticleIndex(req *types.ArticleIndexRequest) (resp *
 			Id:        item.Id,
 			Title:     item.Title.String,
 			Content:   item.Content.String,
-			CreatedAt: item.CreatedAt.Time.String(),
-			UpdatedAt: item.CreatedAt.Time.String(),
+			CreatedAt: item.CreatedAt.Time.Format("2006-01-02 15:04:05"),
+			UpdatedAt: item.CreatedAt.Time.Format("2006-01-02 15:04:05"),
 		})
 	}
+	//获取总数量
+	total, err := l.svcCtx.ArticleModel.Count(l.ctx, req.Keywords)
 
 	return &types.ArticleIndexResponse{
 		Items: articles,
-		Total: int64(len(articles)),
+		Total: total,
 	}, nil
 }

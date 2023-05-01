@@ -44,18 +44,71 @@ type (
 	}
 )
 
+type (
+	ArticleUpdateRequest {
+		Id        int64  `path:"id"`
+		Title     string `json:"title"`
+		Content   string `json:"content"`
+		CreatedAt string `json:"created_at"`
+		UpdatedAt string `json:"updated_at"`
+	}
+	//{"status":0,"msg":"\u5220\u9664\u6210\u529f"}
+	ArticleUpdateResponse {
+		Status int64        `json:"status"`
+		Msg    string       `json:"msg"`
+		Data   ArticleItems `json:"data"`
+	}
+)
+
+type (
+	ArticleStoreRequest {
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
+	//{"status":0,"msg":"\u5220\u9664\u6210\u529f"}
+	ArticleStoreResponse {
+		Id        int64  `json:"id"`
+		Title     string `json:"title"`
+		Content   string `json:"content"`
+		CreatedAt string `json:"created_at"`
+		UpdatedAt string `json:"updated_at"`
+	}
+)
+
+type (
+	ArticleBulkDeleteRequest {
+		Ids string `path:"ids"`
+	}
+	ArticleBulkDeleteResponse {
+		Status int64  `json:"status"`
+		Msg    string `json:"msg"`
+	}
+)
+
 @server(
 	prefix: api
-	middleware: CORSMiddleware
 )
 service atricle-api {
+	
 	@handler ArticleIndex
 	get /articles (ArticleIndexRequest) returns (ArticleIndexResponse)
 	
 	@handler ArticleDestroy
-	get /articles/:id (ArticleDestroyRequest) returns (ArticleDestroyResponse)
+	delete /articles/:id (ArticleDestroyRequest) returns (ArticleDestroyResponse)
 	
 	@handler ArticleEdit
 	get /articles/:id/edit (ArticleEditRequest) returns (ArticleEditResponse)
+	
+	@handler ArticleUpdate
+	post /articles/:id (ArticleUpdateRequest) returns (ArticleUpdateResponse)
+	
+	@handler ArticleOptions
+	options /articles () returns ()
+	
+	@handler ArticleStore
+	put /articles (ArticleStoreRequest) returns (ArticleStoreResponse)
+	
+	@handler ArticleBulkDelete
+	delete /articles/bulkDelete/:ids (ArticleBulkDeleteRequest) returns (ArticleBulkDeleteResponse)
 	
 }
