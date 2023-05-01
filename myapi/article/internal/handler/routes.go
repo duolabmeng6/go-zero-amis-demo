@@ -38,7 +38,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: ArticleOptionsHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodPut,
+				Method:  http.MethodPost,
 				Path:    "/articles",
 				Handler: ArticleStoreHandler(serverCtx),
 			},

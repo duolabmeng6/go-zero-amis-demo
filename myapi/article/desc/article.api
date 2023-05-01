@@ -108,7 +108,7 @@ service atricle-api {
 	options /articles () returns ()
 	
 	@handler ArticleStore
-	put /articles (ArticleStoreRequest) returns (ArticleStoreResponse)
+	post /articles (ArticleStoreRequest) returns (ArticleStoreResponse)
 	
 	@handler ArticleBulkDelete
 	delete /articles/bulkDelete/:ids (ArticleBulkDeleteRequest) returns (ArticleBulkDeleteResponse)
