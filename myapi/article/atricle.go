@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/rest/httpx"
 	"myapi/article/internal/config"
 	"myapi/article/internal/handler"
 	"myapi/article/internal/svc"
@@ -21,6 +23,8 @@ func main() {
 
 	//server := rest.MustNewServer(c.RestConf)
 	server := rest.MustNewServer(c.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
+		fmt.Println("UnauthorizedCallback")
+		httpx.Error(w, errors.New("UnauthorizedCallback"))
 	}), rest.WithCors("*"))
 
 	defer server.Stop()
