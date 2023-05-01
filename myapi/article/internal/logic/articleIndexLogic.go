@@ -23,7 +23,7 @@ func NewArticleIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Arti
 }
 
 func (l *ArticleIndexLogic) ArticleIndex(req *types.ArticleIndexRequest) (resp *types.ArticleIndexResponse, err error) {
-	articleItems, err := l.svcCtx.ArticleModel.Index(l.ctx, req.Keywords, req.PerPage, req.Page)
+	articleItems, err := l.svcCtx.ArticleModel.Index(l.ctx, req.Keywords, req.PerPage, req.Page, req.OrderBy, req.OrderDir)
 	if err != nil {
 		return nil, err
 	}

@@ -13,6 +13,8 @@ type ArticleIndexRequest struct {
 	Page     int64  `form:"page"`
 	PerPage  int64  `form:"perPage"`
 	Keywords string `form:"keywords,optional"`
+	OrderBy  string `form:"orderBy,optional,default=id"`
+	OrderDir string `form:"orderDir,optional,default=desc"`
 }
 
 type ArticleIndexResponse struct {

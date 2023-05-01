@@ -13,7 +13,7 @@ type (
 	// and implement the added methods in customArticlesModel.
 	ArticlesModel interface {
 		articlesModel
-		Index(ctx context.Context, keywords string, perPage int64, page int64) (*[]Articles, error)
+		Index(ctx context.Context, keywords string, perPage int64, page int64, OrderBy string, OrderDir string) (*[]Articles, error)
 		Count(ctx context.Context, keywords string) (int64, error)
 	}
 
@@ -30,15 +30,20 @@ func NewArticlesModel(conn sqlx.SqlConn) ArticlesModel {
 }
 
 // Index 查询文章列表 perPage 每页显示数量 page 页码 keywords 搜索关键字可能为空
-func (m *defaultArticlesModel) Index(ctx context.Context, keywords string, perPage int64, page int64) (*[]Articles, error) {
+func (m *defaultArticlesModel) Index(ctx context.Context, keywords string, perPage int64, page int64, OrderBy string, OrderDir string) (*[]Articles, error) {
 	var resp []Articles
-	query := "select " + articlesRows + " from " + m.table + " LIMIT ?,?"
+	logx.Error("==========")
+	logx.Error(OrderBy)
+	logx.Error(OrderDir)
+
+	query := "select " + articlesRows + " from " + m.table + " " + " ORDER BY `" + OrderBy + "` " + OrderDir + " LIMIT ?,?"
+
 	logx.Error("????????")
 	logx.Error(keywords)
 
 	err := error(nil)
 	if keywords != "" {
-		query = "select " + articlesRows + " from " + m.table + " where title like ? LIMIT ?,?"
+		query = "select " + articlesRows + " from " + m.table + " where title like ?" + " ORDER BY `" + OrderBy + "` " + OrderDir + "  LIMIT ?,?"
 		keywords = "%" + keywords + "%"
 		err = m.conn.QueryRowsCtx(ctx, &resp, query, keywords, (page-1)*perPage, perPage)
 	} else {
