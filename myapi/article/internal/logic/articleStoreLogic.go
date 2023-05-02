@@ -3,10 +3,9 @@ package logic
 import (
 	"context"
 	"database/sql"
-	"myapi/model"
-
 	"myapi/article/internal/svc"
 	"myapi/article/internal/types"
+	"myapi/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,6 +29,9 @@ func (l *ArticleStoreLogic) ArticleStore(req *types.ArticleStoreRequest) (resp *
 	articleData := new(model.Articles)
 	articleData.Title = sql.NullString{String: req.Title, Valid: true}
 	articleData.Content = sql.NullString{String: req.Content, Valid: true}
+	//articleData.CreatedAt = sql.NullTime{Time: time.Now(), Valid: true}
+	//articleData.UpdatedAt = sql.NullTime{Time: time.Now(), Valid: true}
+
 	Result, err := l.svcCtx.ArticleModel.Insert(l.ctx, articleData)
 	if err != nil {
 		return nil, err
@@ -43,7 +45,7 @@ func (l *ArticleStoreLogic) ArticleStore(req *types.ArticleStoreRequest) (resp *
 		Id:        article.Id,
 		Title:     article.Title.String,
 		Content:   article.Content.String,
-		CreatedAt: article.CreatedAt.Time.Format("2006-01-02 15:04:05"),
-		UpdatedAt: article.CreatedAt.Time.Format("2006-01-02 15:04:05"),
+		CreatedAt: article.CreatedAt.Format("2006-01-02 15:04:05"),
+		UpdatedAt: article.CreatedAt.Format("2006-01-02 15:04:05"),
 	}, nil
 }

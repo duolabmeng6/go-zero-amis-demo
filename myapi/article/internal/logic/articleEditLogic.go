@@ -37,8 +37,8 @@ func (l *ArticleEditLogic) ArticleEdit(req *types.ArticleEditRequest) (resp *typ
 			Id:        article.Id,
 			Title:     article.Title.String,
 			Content:   article.Content.String,
-			CreatedAt: article.CreatedAt.Time.String(),
-			UpdatedAt: article.CreatedAt.Time.String(),
+			CreatedAt: article.CreatedAt.Format("2006-01-02 15:04:05"),
+			UpdatedAt: article.CreatedAt.Format("2006-01-02 15:04:05"),
 		},
 	}, nil
 }

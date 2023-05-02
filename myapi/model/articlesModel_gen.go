@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -38,8 +39,8 @@ type (
 		Id        int64          `db:"id"`
 		Title     sql.NullString `db:"title"`
 		Content   sql.NullString `db:"content"`
-		CreatedAt sql.NullTime   `db:"created_at"`
-		UpdatedAt sql.NullTime   `db:"updated_at"`
+		CreatedAt time.Time      `db:"created_at"`
+		UpdatedAt time.Time      `db:"updated_at"`
 	}
 )
 

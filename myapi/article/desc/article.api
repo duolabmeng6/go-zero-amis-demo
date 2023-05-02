@@ -102,7 +102,7 @@ service atricle-api {
 	get /articles/:id/edit (ArticleEditRequest) returns (ArticleEditResponse)
 	
 	@handler ArticleUpdate
-	post /articles/:id (ArticleUpdateRequest) returns (ArticleUpdateResponse)
+	put /articles/:id (ArticleUpdateRequest) returns (ArticleUpdateResponse)
 	
 	@handler ArticleOptions
 	options /articles () returns ()
