@@ -8,6 +8,7 @@ import (
 	"myapi/article/internal/config"
 	"myapi/article/internal/handler"
 	"myapi/article/internal/svc"
+	"myapi/common/tool"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -29,6 +30,7 @@ func main() {
 
 	defer server.Stop()
 	ctx := svc.NewServiceContext(c)
+	tool.StaticFileHandler(server, "/", "../web/")
 
 	handler.RegisterHandlers(server, ctx)
 
